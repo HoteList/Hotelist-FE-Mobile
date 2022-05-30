@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: mBackGroundColor,
         title: SvgPicture.asset('assets/icons/logo.svg', width: MediaQuery.of(context).size.width / 3,),
         elevation: 0,
+        titleSpacing: -40.0,
       ),
     );
   }
