@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 4000), () {
+    Timer(const Duration(milliseconds: 1000), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
     });
   }

@@ -28,33 +28,34 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       token: json['token'],
-      id: json['data']['id'],
-      email: json['data']['email'],
-      full_name: json['data']['full_name'],
-      username: json['data']['username'],
-      image: json['data']['image'],
-      lat: json['data']['lat'],
-      lot: json['data']['lot'],
-      role: json['data']['role'],
+      id: json['user']['id'],
+      email: json['user']['email'],
+      full_name: json['user']['full_name'],
+      username: json['user']['username'],
+      image: json['user']['image'],
+      lat: json['user']['lat'],
+      lot: json['user']['lot'],
+      role: json['user']['role'],
     );
   }
 
-  Future<User> login(String username, String password) async {
-    final response = await http.post(
-      Uri.parse('https://hotelist-be.herokuapp.com/api/login'),
-      headers: <String, String> {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String> {
-        'username': username,
-        'password': password
-      })
-    );
+}
 
-    if (response.statusCode == 200) {
-      return User.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to get User');
-    }
+Future<User> login(String username, String password) async {
+  final response = await http.post(
+    Uri.parse('https://hotelist-be.herokuapp.com/api/login'),
+    headers: <String, String> {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String> {
+      'username': username,
+      'password': password
+    })
+  );
+
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to get User');
   }
 }

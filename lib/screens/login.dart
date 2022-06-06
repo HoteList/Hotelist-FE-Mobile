@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelist_fe_mobile/screens/home_screen.dart';
 import 'package:hotelist_fe_mobile/screens/regist.dart';
 import 'package:hotelist_fe_mobile/widgets/btn.dart';
+import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 import '../models/user_model.dart';
 import '../widgets/header_container.dart';
@@ -15,7 +16,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  var username, password;
+
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   bool _secureText = true;
   late Future<User> futureUser;
 
@@ -47,8 +51,8 @@ class _LoginState extends State<Login> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       _textInput(
-                          hint: 'Username', icon: Icons.account_circle_sharp),
-                      _textInput(hint: 'Password', icon: Icons.vpn_key),
+                          controller: username, hint: 'Username', icon: Icons.account_circle_sharp),
+                      _textInput(controller: password, hint: 'Password', icon: Icons.vpn_key),
                       // Container(
                       //   margin: const EdgeInsets.only(top: 10),
                       //   alignment: Alignment.centerRight,
@@ -56,12 +60,27 @@ class _LoginState extends State<Login> {
                       // ),
                       Expanded(
                         child: Center(
-                          child: ButtonWidget("LOGIN", () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
-                                ));
+                          child: ElevatedButton(
+                            child: Text("LOGIN"),
+                            onPressed: () {
+                              try {
+                                futureUser = login(username.text, password.text);
+                                futureUser.then((val) {
+                                  // print(val.id);
+                                  UserSecureStorage.setToken(val.token);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const HomeScreen(),
+                                      ));
+                                })
+                                .catchError((err) {
+                                  print("error");
+                                });
+                              } catch (e) {
+                                print("error");
+                              }
+                            
                           }),
                         ),
                       ),

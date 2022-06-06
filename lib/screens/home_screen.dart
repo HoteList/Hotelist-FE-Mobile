@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
+import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -10,6 +11,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  late Future<dynamic> tokenFuture;
+
+  String token = "";
+
+  @override
+  void initState() {
+    super.initState();
+    tokenFuture = UserSecureStorage.getToken();
+    tokenFuture.then((value) {
+      setState(() {
+        token = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         titleSpacing: -40.0,
       ),
+      body: Row(children: [
+        // Text(token)
+        
+      ]),
     );
   }
 }
