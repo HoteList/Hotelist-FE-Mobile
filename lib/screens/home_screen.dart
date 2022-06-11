@@ -36,9 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         titleSpacing: -40.0,
       ),
-      body: Row(children: [
+      body: Row(children: <Widget>[
         // Text(token)
-        
       ]),
     );
   }
