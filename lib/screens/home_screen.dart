@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
 import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 import '../models/hotel_model.dart';
+import '../models/room_detail_model.dart';
+import '../models/transaction_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -39,12 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   height: 50, 
                       // ),
                       const Padding(padding: EdgeInsets.all(8.0)),
-                      Text(snapshot.data![index].name),
+                      Text(snapshot.data![index].name!),
                       const SizedBox(width: 50),
-                      if (snapshot.data![index].description.length > 50) (
-                        Text(snapshot.data![index].description.substring(0, 47) + "...")
+                      if (snapshot.data![index].description!.length > 50) (
+                        Text(snapshot.data![index].description!.substring(0, 47) + "...")
                        ) else (
-                        Text(snapshot.data![index].description)
+                        Text(snapshot.data![index].description!)
                        )
                     ]),
                     padding: const EdgeInsets.all(1.0),

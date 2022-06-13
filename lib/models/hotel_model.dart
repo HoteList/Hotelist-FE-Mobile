@@ -4,11 +4,11 @@ import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 class Hotel {
   final int id;
-  final String name;
-  final String description;
+  final String? name;
+  final String? description;
   final String? lat;
   final String? lot;
-  final String image;
+  final String? image;
   final int capacity;
 
   const Hotel({
