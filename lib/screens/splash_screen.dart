@@ -14,15 +14,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  late Future<String?> futureToken;
+
   @override
   void initState() {
     super.initState();
+
+    futureToken = UserSecureStorage.getToken();
+
     Timer(const Duration(milliseconds: 1000), () {
-      if (UserSecureStorage.getToken() != null) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-      } else {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
-      }
+      futureToken.then((value) {
+        if (value != null) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+        }
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
     });
   }
   @override
