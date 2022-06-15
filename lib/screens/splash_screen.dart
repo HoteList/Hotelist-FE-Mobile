@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hotelist_fe_mobile/screens/home_screen.dart';
 import 'package:hotelist_fe_mobile/screens/login.dart';
+import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({ Key? key }) : super(key: key);
@@ -16,7 +18,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(milliseconds: 1000), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+      if (UserSecureStorage.getToken() != null) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      } else {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+      }
     });
   }
   @override
