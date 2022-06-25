@@ -39,6 +39,9 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   http: ^0.13.4
   card_swiper: ^2.0.4
+  geocode: ^1.0.1
+  google_geocoding: ^0.2.0
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - .env
 
   # To add assets to your application, add an assets section, like this:
   # assets:

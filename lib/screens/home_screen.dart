@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
 import 'package:hotelist_fe_mobile/screens/hotel_details.dart';
-// import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
+import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 import '../models/hotel_model.dart';
 // import '../models/room_detail_model.dart';
@@ -62,10 +62,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        child: Image.network(snapshot.data![index].image!.split(",")[0])
-                      ),
+                      leading: SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Swiper(
+                          itemBuilder: (BuildContext context, int idx) {
+                            return Image.network(
+                              snapshot.data![index].image!.split(",")[idx],
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            );
+                          },
+                          itemWidth: 100,
+                          itemHeight: 100,
+                          itemCount: snapshot.data![index].image!.split(",").length,
+                          autoplay: true,
+                          autoplayDelay: 3000,
+                          layout: SwiperLayout.DEFAULT,
+                        ),),
+                      
                       title: Column(children: [
                         Text(snapshot.data![index].name!, style: TextStyle(fontWeight: FontWeight.bold)),
                         if (snapshot.data![index].description!.length > 50) (
@@ -91,6 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 );
               } else if (snapshot.hasError) {
+                UserSecureStorage.deleteToken();
+                // UserSecureStorage.deleteId();
                 return Text("${snapshot.error}");
               } else {
                 return SizedBox(width: 60, height: 60, child: CircularProgressIndicator());

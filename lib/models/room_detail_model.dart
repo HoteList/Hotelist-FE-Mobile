@@ -6,7 +6,7 @@ class RoomDetail {
   final int id;
   final String? name;
   final String? price;
-  final String? capacity;
+  final int? capacity;
   final String? description;
   final String? image;
   final int hotel_id;
