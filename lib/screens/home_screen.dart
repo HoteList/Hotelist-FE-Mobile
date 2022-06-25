@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
 import 'package:hotelist_fe_mobile/screens/hotel_details.dart';
-// import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
+import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 import '../models/hotel_model.dart';
 // import '../models/room_detail_model.dart';
