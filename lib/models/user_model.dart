@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:convert';
+import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class User {
@@ -39,6 +40,20 @@ class User {
     );
   }
 
+  factory User.fromJson2(Map<String, dynamic> json) {
+    return User(
+      token: "",
+      id: json['id'],
+      email: json['email'],
+      full_name: json['full_name'],
+      username: json['username'],
+      image: json['image'],
+      lat: json['lat'],
+      lot: json['lot'],
+      role: json['role'],
+    );
+  }
+
 }
 
 Future<User> login(String username, String password) async {
@@ -58,4 +73,49 @@ Future<User> login(String username, String password) async {
   } else {
     throw Exception('Failed to get User');
   }
+}
+
+Future<User> getUser() async {
+  final token = await UserSecureStorage.getToken();
+
+  final response = await http.get(
+    Uri.parse("https://hotelist-be.herokuapp.com/api/auth/user"),
+    headers: <String, String> {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': "Bearer " + token.toString()
+    }
+  );
+
+  if (response.statusCode == 200) {
+    return User.fromJson2(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to get User');
+  }
+}
+
+Future<User> updateUser(String full_name, String email, String username, String image) async {
+  final token = await UserSecureStorage.getToken();
+  final id = await UserSecureStorage.getId();
+
+  final response = await http.put(
+    Uri.parse("https://hotelist-be.herokuapp.com/api/user"),
+    headers: <String, String> {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': "Bearer " + token.toString()
+    },
+    body: jsonEncode(<String, String> {
+      'id': id!,
+      'username': username,
+      'email': email,
+      'full_name': full_name,
+      'image': image
+    })
+  );
+
+  if (response.statusCode == 200) {
+    return User.fromJson2(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to update User');
+  }
+
 }
