@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 );
               } else if (snapshot.hasError) {
+                UserSecureStorage.deleteToken();
                 return Text("${snapshot.error}");
               } else {
                 return SizedBox(width: 60, height: 60, child: CircularProgressIndicator());

@@ -62,21 +62,16 @@ class _LoginState extends State<Login> {
                         child: Center(
                           child: ElevatedButton(
                             child: Text("LOGIN"),
-                            onPressed: () {
+                            onPressed: () async {
                               try {
-                                futureUser = login(username.text, password.text);
-                                futureUser.then((val) {
-                                  // print(val.id);
-                                  UserSecureStorage.setToken(val.token);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
-                                      ));
-                                })
-                                .catchError((err) {
-                                  print("error");
-                                });
+                                final user = await login(username.text, password.text);
+
+                                await UserSecureStorage.setToken(user.token);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreen(),
+                                    ));
                               } catch (e) {
                                 print("error");
                               }
