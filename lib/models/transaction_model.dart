@@ -5,12 +5,16 @@ import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 class Transaction {
   final int id;
   final int room_id;
+  final String room_detail_name;
+  final String hotel_name;
   final int user_id;
   final String book_date;
 
   const Transaction({
     required this.id,
     required this.room_id,
+    required this.room_detail_name,
+    required this.hotel_name,
     required this.user_id,
     required this.book_date,
   });
@@ -19,6 +23,8 @@ class Transaction {
     return Transaction(
       id: json['id'],
       room_id: json['room_id'],
+      room_detail_name: json['room_detail_name'],
+      hotel_name: json['hotel_name'],
       user_id: json['user_id'],
       book_date: json['book_date'],
     );
@@ -99,7 +105,7 @@ Future<Transaction> getTransactionById(String id) async {
   final token = await UserSecureStorage.getToken();
 
   final response = await http.get(
-    Uri.parse("https://hotelist-be.herokuapp.com/api/transaction/${id}"),
+    Uri.parse("https://hotelist-be.herokuapp.com/api/transaction/id/${id}"),
     headers: <String, String> {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': "Bearer " + token.toString()

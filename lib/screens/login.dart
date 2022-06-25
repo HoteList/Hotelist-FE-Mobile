@@ -17,6 +17,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
+  bool error = false;
+
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -58,6 +60,11 @@ class _LoginState extends State<Login> {
                       //   alignment: Alignment.centerRight,
                       //   child: const Text('Forgot Password?'),
                       // ),
+                      if (error) (
+                        Container(margin: EdgeInsets.all(19.0), padding: EdgeInsets.all(8.0), color: Color.fromARGB(255, 255, 176, 123), child: 
+                          Text("UNAUTHENTICATED!", style: TextStyle(color: Colors.black))
+                        ,)
+                      ),
                       Expanded(
                         child: Center(
                           child: ElevatedButton(
@@ -65,15 +72,25 @@ class _LoginState extends State<Login> {
                             onPressed: () async {
                               try {
                                 final user = await login(username.text, password.text);
+                                
+                                setState(() {
+                                  error = false;
+
+                                  username.text = "";
+                                  password.text = "";
+                                });
 
                                 await UserSecureStorage.setToken(user.token);
+                                await UserSecureStorage.setId(user.id);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => HomeScreen(),
                                     ));
                               } catch (e) {
-                                print("error");
+                                setState(() {
+                                  error = true;
+                                });
                               }
                             
                           }),
@@ -124,6 +141,7 @@ Widget _textInput({controller, hint, icon}) {
     ),
     padding: const EdgeInsets.only(left: 10),
     child: TextFormField(
+      obscureText: hint == "Password" ? true : false,
       controller: controller,
       decoration: InputDecoration(
         border: InputBorder.none,
