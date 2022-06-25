@@ -1,11 +1,13 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
-import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:hotelist_fe_mobile/screens/hotel_details.dart';
+// import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
+
 import '../models/hotel_model.dart';
-import '../models/room_detail_model.dart';
-import '../models/transaction_model.dart';
+// import '../models/room_detail_model.dart';
+// import '../models/transaction_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -62,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListTile(
                       leading: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        child: Image.network('https://picsum.photos/250?image=9', fit: BoxFit.cover, width: 100, height: 100),
+                        child: Image.network(snapshot.data![index].image!.split(",")[0])
                       ),
                       title: Column(children: [
                         Text(snapshot.data![index].name!, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -76,7 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                       ),
                       contentPadding: EdgeInsets.all(8.0),
-                      
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HotelDetails(
+                              hotel: snapshot.data![index],
+                            ),
+                          ),
+                        );
+                      },
                     );
                   }
                 );
