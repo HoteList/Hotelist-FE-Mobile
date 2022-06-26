@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hotelist_fe_mobile/models/hotel_model.dart';
 import 'package:hotelist_fe_mobile/models/room_detail_model.dart';
+import 'package:hotelist_fe_mobile/screens/room_details.dart';
 import '../constants/color_constant.dart';
 import '../utils/geocode_location.dart';
 import '../utils/user_secure_storage.dart';
@@ -73,12 +74,8 @@ class _HotelDetailsState extends State<HotelDetails> {
                 return Image.network(
                   widget.hotel.image!.split(",")[idx],
                   fit: BoxFit.cover,
-                  width: 100,
-                  height: 100,
                 );
               },
-              itemWidth: 100,
-              itemHeight: 100,
               itemCount: widget.hotel.image!.split(",").length,
               autoplay: true,
               autoplayDelay: 3000,
@@ -110,7 +107,7 @@ class _HotelDetailsState extends State<HotelDetails> {
                           color: Colors.amber.shade700,
                         ),
                          Padding(
-                          padding: EdgeInsets.only(left: 5),
+                          padding: const EdgeInsets.only(left: 5),
                           child: Text(
                             // GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot)),
                             address.toString(),
@@ -127,8 +124,11 @@ class _HotelDetailsState extends State<HotelDetails> {
                           Icons.hotel,
                           color: Colors.amber.shade700,
                         ),
-                        Text(
-                          "${widget.hotel.capacity.toString()} kamar tersedia",
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text(
+                            "${widget.hotel.capacity.toString()} kamar",
+                          ),
                         ),
                       ],
                     ),
@@ -146,13 +146,23 @@ class _HotelDetailsState extends State<HotelDetails> {
                       Text(widget.hotel.description!)
                     ),
                     if (widget.hotel.description!.length > 100 && flag) (
-                      TextButton(child: Text("Show More"), onPressed: () {
+                      TextButton(child: Text(
+                        "Show More",
+                        style: TextStyle(
+                          color: Colors.amber.shade700
+                        ),
+                      ), onPressed: () {
                         setState(() {
                           flag = false;
                         });
                       },)
-                    ) else (
-                      TextButton(child: Text("Show Less"), onPressed: () {
+                    ) else if (widget.hotel.description!.length > 100 && !flag) (
+                      TextButton(child: Text(
+                        "Show Less",
+                        style: TextStyle(
+                          color: Colors.amber.shade700
+                        ),
+                      ), onPressed: () {
                         setState(() {
                           flag = true;
                         });
@@ -172,7 +182,7 @@ class _HotelDetailsState extends State<HotelDetails> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                padding: const EdgeInsets.only( top: 16),
                 child: FutureBuilder<List<RoomDetail>>(
                     future: getRoomDetailsByHotelId(widget.hotel.id),
                     builder: (BuildContext context, AsyncSnapshot<List<RoomDetail>> snapshot) {
@@ -192,20 +202,16 @@ class _HotelDetailsState extends State<HotelDetails> {
                                     return Image.network(
                                       snapshot.data![index].image!.split(",")[idx],
                                       fit: BoxFit.cover,
-                                      width: 100,
-                                      height: 100,
                                     );
                                   },
-                                  itemWidth: 100,
-                                  itemHeight: 100,
                                   itemCount: snapshot.data![index].image!.split(",").length,
-                                  autoplay: true,
+                                  autoplay: snapshot.data![index].image!.split(",").length > 1 ? true : false,
                                   autoplayDelay: 3000,
                                   layout: SwiperLayout.DEFAULT,
                                 ),),
                               
                               title: Column(children: [
-                                Text(snapshot.data![index].name!, style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(snapshot.data![index].name!, style: const TextStyle(fontWeight: FontWeight.bold)),
                                 if (snapshot.data![index].description!.length > 50) (
                                     Text(snapshot.data![index].description!.substring(0, 47) + "...", style: TextStyle(color: Colors.black.withOpacity(0.5)),)
                                   ) else (
@@ -215,15 +221,15 @@ class _HotelDetailsState extends State<HotelDetails> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                               ),
-                              contentPadding: EdgeInsets.all(8.0),
+                              // contentPadding: EdgeInsets.all(8.0),
                               onTap: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     builder: (context) => HotelDetails(
-                                //       hotel: snapshot.data![index],
-                                //     ),
-                                //   ),
-                                // );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => RoomDetails(
+                                      roomDetail: snapshot.data![index],
+                                    ),
+                                  ),
+                                );
                               },
                             );
                           }
@@ -233,7 +239,7 @@ class _HotelDetailsState extends State<HotelDetails> {
                         // UserSecureStorage.deleteId();
                         return Text("${snapshot.error}");
                       } else {
-                        return SizedBox(width: 60, height: 60, child: CircularProgressIndicator());
+                        return const SizedBox(width: 60, height: 60, child: CircularProgressIndicator());
                       }
                     },
                   )
