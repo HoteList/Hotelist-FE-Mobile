@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotelist_fe_mobile/screens/home_screen.dart';
+import 'package:hotelist_fe_mobile/screens/splash_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,9 +8,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'HoteList',
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }
