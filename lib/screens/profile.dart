@@ -1,70 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:hotelist_fe_mobile/models/user_model.dart';
 import 'package:hotelist_fe_mobile/screens/editProfile.dart';
+import 'package:hotelist_fe_mobile/screens/login.dart';
 import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
-class Profile_page extends StatefulWidget {
-  const Profile_page({ Key? key }) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({ Key? key }) : super(key: key);
 
   @override
-  State<Profile_page> createState() => _Profile_page();
+  State<ProfilePage> createState() => _ProfilePage();
 }
 
-class _Profile_page extends State<Profile_page> {
-
+class _ProfilePage extends State<ProfilePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
+      body: ListView(
+        physics: const ClampingScrollPhysics(),
+        children: [
         Expanded(child: 
           FutureBuilder<User>(
             future: getUser(),
             builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.image != "") {
-                  return Center(child: 
-                    Column(children: [
-                      Container(
-                        child: ClipRRect(child: 
-                          Image.network(snapshot.data!.image), 
-                          borderRadius: BorderRadius.circular(300),
-                        ),
-                        width: 300,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: const BorderRadius.all(Radius.circular(300))
-                        ),
-                      ),
-                      SizedBox(height: 25,),
-                      Text("Full Name", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      Text(snapshot.data!.full_name, style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 25,),
-                      Text("Email", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      Text(snapshot.data!.email, style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 25,),
-                      Text("Username", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      Text(snapshot.data!.username, style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 25,),
-                      ElevatedButton(onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => (
-                                Edit_Profile_page(user: snapshot.data!,)
-                              )
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: ClipRRect(child: 
+                                Image.network(snapshot.data!.image), 
+                                borderRadius: BorderRadius.circular(70),
+                              ),
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: const BorderRadius.all(Radius.circular(70))
+                              ),
                             ),
-                          );
-                        },
-                        child: Text("Edit")
-                      ),
-                      SizedBox(height: 30,),
-                      ElevatedButton(onPressed: () {
-                          UserSecureStorage.deleteToken();
-                          UserSecureStorage.deleteId(); 
-                          Navigator.pop(context);
-                        },
-                        child: Text("Log Out"),
-                      ),
-                    ])
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${snapshot.data!.username} (${snapshot.data!.full_name})",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data!.email,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            TextButton(onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => (
+                                      EditProfilePage(user: snapshot.data!,)
+                                    )
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "Edit",
+                                style: TextStyle(
+                                  color: Colors.amber.shade700
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          child: 
+                            ElevatedButton(
+                              onPressed: () {
+                                UserSecureStorage.deleteToken();
+                                UserSecureStorage.deleteId(); 
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Log Out"),
+                            ),
+                        ),
+                      ]
+                    )
                   );
                 } else {
                   return Center(child: 
@@ -81,34 +107,34 @@ class _Profile_page extends State<Profile_page> {
                           borderRadius: const BorderRadius.all(Radius.circular(300))
                         ),
                       ),
-                      SizedBox(height: 25,),
+                      // SizedBox(height: 25,),
                       Text("Full Name", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                       Text(snapshot.data!.full_name, style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 25,),
+                      // SizedBox(height: 25,),
                       Text("Email", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                       Text(snapshot.data!.email, style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 25,),
+                      // SizedBox(height: 25,),
                       Text("Username", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                       Text(snapshot.data!.username, style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 25,),
+                      // SizedBox(height: 25,),
                       ElevatedButton(onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => (
-                                Edit_Profile_page(user: snapshot.data!,)
+                                EditProfilePage(user: snapshot.data!,)
                               )
                             ),
                           );
                         },
-                        child: Text("Edit")
+                        child: const Text("Edit")
                       ),
-                      SizedBox(height: 30,),
-                      ElevatedButton(onPressed: () {
-                          UserSecureStorage.deleteToken();
-                          UserSecureStorage.deleteId(); 
-                          Navigator.pop(context);
+                      // SizedBox(height: 30,),
+                      ElevatedButton(onPressed: () async {
+                          await UserSecureStorage.deleteToken();
+                          await UserSecureStorage.deleteId(); 
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login()));
                         },
-                        child: Text("Log Out")
+                        child: const Text("Log Out")
                       ),
                     ])
                   );

@@ -2,14 +2,14 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
-// import 'package:hotelist_fe_mobile/screens/profile.dart';
-// import 'package:hotelist_fe_mobile/screens/transaction.dart';
+import 'package:hotelist_fe_mobile/screens/profile.dart';
+import 'package:hotelist_fe_mobile/screens/transaction.dart';
 import 'package:hotelist_fe_mobile/screens/hotel_details.dart';
 import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
 import '../models/hotel_model.dart';
-// import '../models/room_detail_model.dart';
-// import '../models/transaction_model.dart';
+import '../models/room_detail_model.dart';
+import '../models/transaction_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -124,8 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(12.0),
     ),
     Text("Search"),
-    // Transaction_page(),
-    // Profile_page()
+    TransactionPage(),
+    ProfilePage()
   ];
 
   @override

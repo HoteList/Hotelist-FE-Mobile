@@ -3,14 +3,14 @@ import 'package:hotelist_fe_mobile/models/transaction_model.dart';
 import 'package:hotelist_fe_mobile/screens/oneTransaction.dart';
 import 'package:hotelist_fe_mobile/utils/user_secure_storage.dart';
 
-class Transaction_page extends StatefulWidget {
-  const Transaction_page({ Key? key }) : super(key: key);
+class TransactionPage extends StatefulWidget {
+  const TransactionPage({ Key? key }) : super(key: key);
 
   @override
-  State<Transaction_page> createState() => _Transaction_page();
+  State<TransactionPage> createState() => _TransactionPage();
 }
 
-class _Transaction_page extends State<Transaction_page> {
+class _TransactionPage extends State<TransactionPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,26 +28,25 @@ class _Transaction_page extends State<Transaction_page> {
                         Padding(
                           padding: EdgeInsets.all(16.0),
                           child:
-                            Row(children: [
-                              Column(children: [
-                                  Text(snapshot.data![index].hotel_name.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
-                                  SizedBox(height: 16,),
-                                  Text(snapshot.data![index].room_detail_name, style: TextStyle(fontWeight: FontWeight.bold)),
-                                ],
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                              ),
-                              SizedBox(width: 100,),
-                              Row(children: [
-                                  Text(snapshot.data![index].book_date, style: TextStyle(fontWeight: FontWeight.bold)),
-                                ],
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                              ),
-                              SizedBox(width: 50,),
-                              Column(children: [
-                                Icon(Icons.arrow_right,)
-                              ],)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(snapshot.data![index].hotel_name.toString(), style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    Text(snapshot.data![index].room_detail_name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(snapshot.data![index].book_date, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                ),
+                                const Icon(Icons.arrow_right,)
                             ]
                           ),
                         ),
@@ -55,7 +54,7 @@ class _Transaction_page extends State<Transaction_page> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => (
-                                oneTransaction(transaction: snapshot.data![index])
+                                OneTransaction(transaction: snapshot.data![index])
                               )
                             )
                           );
@@ -70,7 +69,7 @@ class _Transaction_page extends State<Transaction_page> {
                 UserSecureStorage.deleteId();
                 return Text("${snapshot.error}");
               } else {
-                return SizedBox(width: 60, height: 60, child: CircularProgressIndicator());
+                return const SizedBox(width: 60, height: 60, child: CircularProgressIndicator());
               }
             }
           ),

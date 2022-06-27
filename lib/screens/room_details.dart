@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hotelist_fe_mobile/models/room_detail_model.dart';
+import 'package:intl/intl.dart';
 
 import '../constants/color_constant.dart';
 
@@ -14,6 +15,8 @@ class RoomDetails extends StatefulWidget {
 }
 
 class _RoomDetailsState extends State<RoomDetails> {
+  DateTime nowDate = DateTime.now();
+  DateTime? newDate;
   bool flag = true;
   @override
   Widget build(BuildContext context) {
@@ -44,98 +47,120 @@ class _RoomDetailsState extends State<RoomDetails> {
               layout: SwiperLayout.DEFAULT,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-                child: Text(
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
                   widget.roomDetail.name!,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.location_pin,
-                      color: Colors.amber.shade700,
-                    ),
-                      Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        // GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot)),
-                        "address",
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_pin,
+                            color: Colors.amber.shade700,
+                          ),
+                            Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              // GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot)),
+                              "address",
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.hotel,
+                            color: Colors.amber.shade700,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              "${widget.roomDetail.capacity.toString()} kamar",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget.roomDetail.description!.length > 100 && flag) (
+                        Text(widget.roomDetail.description!.substring(0, 97) + "...")
+                      ) else (
+                        Text(widget.roomDetail.description!)
+                      ),
+                      if (widget.roomDetail.description!.length > 100 && flag) (
+                        TextButton(child: Text(
+                          "Show More",
+                          style: TextStyle(
+                            color: Colors.amber.shade700
+                          ),
+                        ), onPressed: () {
+                          setState(() {
+                            flag = false;
+                          });
+                        },)
+                      ) else if (widget.roomDetail.description!.length > 100 && !flag) (
+                        TextButton(child: Text(
+                          "Show Less",
+                          style: TextStyle(
+                            color: Colors.amber.shade700
+                          ),
+                        ), onPressed: () {
+                          setState(() {
+                            flag = true;
+                          });
+                        },)
+                      )
+                    ],
+                  ),
                 ),
                 Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.hotel,
-                      color: Colors.amber.shade700,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5),
+                  children: [
+                    Icon(Icons.calendar_month, color: Colors.amber.shade700,),
+                    TextButton(
                       child: Text(
-                        "${widget.roomDetail.capacity.toString()} kamar",
+                        newDate != null ? DateFormat('EEEE, dd-MM-yyyy').format(newDate!) : DateFormat('EEEE, dd-MM-yyyy').format(nowDate),
+                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
                       ),
-                    ),
+                      onPressed: () async {
+                        DateTime? selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: newDate != null ? newDate! : nowDate,
+                          firstDate: nowDate,
+                          lastDate: DateTime(nowDate.year + 2),
+                        );
+                        if (selectedDate == null) return;
+                        setState(() =>
+                          newDate = selectedDate
+                        );
+                      },
+                    )
                   ],
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.roomDetail.description!.length > 100 && flag) (
-                  Text(widget.roomDetail.description!.substring(0, 97) + "...")
-                  
-                ) else (
-                  Text(widget.roomDetail.description!)
-                ),
-                if (widget.roomDetail.description!.length > 100 && flag) (
-                  TextButton(child: Text(
-                    "Show More",
-                    style: TextStyle(
-                      color: Colors.amber.shade700
-                    ),
-                  ), onPressed: () {
-                    setState(() {
-                      flag = false;
-                    });
-                  },)
-                ) else if (widget.roomDetail.description!.length > 100 && !flag) (
-                  TextButton(child: Text(
-                    "Show Less",
-                    style: TextStyle(
-                      color: Colors.amber.shade700
-                    ),
-                  ), onPressed: () {
-                    setState(() {
-                      flag = true;
-                    });
-                  },)
-                )
-              ],
-            )
-          ),
+          )
         ],
       ),
     );
