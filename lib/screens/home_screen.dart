@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                       ),
-                      contentPadding: EdgeInsets.all(8.0),
+                      contentPadding: const EdgeInsets.all(8.0),
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(

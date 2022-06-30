@@ -29,6 +29,17 @@ class Transaction {
       book_date: json['book_date'],
     );
   }
+
+  factory Transaction.fromJson2(Map<String, dynamic> json) {
+    return Transaction(
+      id: json['id'],
+      room_id: json['room_id'],
+      room_detail_name: "",
+      hotel_name: "",
+      user_id: 0,
+      book_date: json['book_date'],
+    );
+  }
 }
 
 Future<List<Transaction>> getTransactionsByUserId() async {
@@ -92,7 +103,7 @@ Future<List<Transaction>> getTransactionByRoomIdAtTime(String room_id, String da
   if (response.statusCode == 200) {
     List<Transaction> transactions = 
       (jsonDecode(response.body) as List)
-      .map((data) => Transaction.fromJson(data)).toList();
+      .map((data) => Transaction.fromJson2(data)).toList();
 
     return transactions;
   } else {
@@ -119,7 +130,7 @@ Future<Transaction> getTransactionById(String id) async {
   }
 }
 
-Future<Transaction> addTransaction(String room_id, String book_date) async {
+Future<dynamic> addTransaction(int room_id, String book_date) async {
   final token = await UserSecureStorage.getToken();
 
   final response = await http.post(
@@ -128,15 +139,16 @@ Future<Transaction> addTransaction(String room_id, String book_date) async {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': "Bearer " + token.toString()
     },
-    body: <String, String> {
+    body: jsonEncode(<String, dynamic> {
       'room_id': room_id,
       'book_date': book_date
-    }
+    })
   );
 
   if (response.statusCode == 200) {
-    return Transaction.fromJson(jsonDecode(response.body));
+    return Transaction.fromJson2(jsonDecode(response.body));
   } else {
-    throw Exception(jsonDecode(response.body).errors);
+    // throw Exception("Gagal Booking");
+    return "Error";
   }
 }
