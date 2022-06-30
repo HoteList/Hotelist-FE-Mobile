@@ -35,7 +35,7 @@ class Hotel {
 
 }
 
-Future<List<Hotel>> getHotels() async {
+Future<List<Hotel>> getHotels(String query) async {
 
   final token = await UserSecureStorage.getToken();
 
@@ -48,11 +48,19 @@ Future<List<Hotel>> getHotels() async {
   );
 
   if (response.statusCode == 200) {
-    List<Hotel> hotels = 
-      (jsonDecode(response.body) as List)
-      .map((data) => Hotel.fromJson(data)).toList();
+    // List<Hotel> hotels = 
+    //   (jsonDecode(response.body) as List)
+    //   .map((data) => Hotel.fromJson(data)).toList();
 
-    return hotels;
+    // return hotels;
+    final List hotels = jsonDecode(response.body);
+
+    return hotels.map((json) => Hotel.fromJson(json)).where((hotel) {
+      final nameLower = hotel.name!.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return nameLower.contains(searchLower);
+    }).toList();
   } else {
     throw Exception('Failed to get Hotel');
   }
