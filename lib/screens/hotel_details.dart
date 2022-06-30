@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hotelist_fe_mobile/models/hotel_model.dart';
 import 'package:hotelist_fe_mobile/models/room_detail_model.dart';
+import 'package:hotelist_fe_mobile/screens/google_maps.dart';
 import 'package:hotelist_fe_mobile/screens/room_details.dart';
 import '../constants/color_constant.dart';
 import '../utils/geocode_location.dart';
@@ -91,23 +92,35 @@ class _HotelDetailsState extends State<HotelDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.location_pin,
-                          color: Colors.amber.shade700,
-                        ),
-                         Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            // GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot)),
-                            address.toString(),
-                            style: const TextStyle(
-                              fontSize: 15,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => GoogleMaps(
+                              lat: widget.hotel.lat!,
+                              lot: widget.hotel.lot!
                             ),
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_pin,
+                            color: Colors.amber.shade700,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              // GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot)),
+                              address.toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       children: <Widget>[
