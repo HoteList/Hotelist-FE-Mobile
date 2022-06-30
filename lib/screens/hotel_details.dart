@@ -21,38 +21,29 @@ class HotelDetails extends StatefulWidget {
 
 class _HotelDetailsState extends State<HotelDetails> {
   Hotel hotel;
-  String address = "";
+  String? address = "";
   bool flag = true;
   _HotelDetailsState(this.hotel);
-  void coba (double? lat, double? lot) async {
+
+  void getAddress(double? lat, double? lot) async {
     final res = await GeocodeLocation.getAddress(lat, lot);
-    print(res);
+
+    setState(() {
+      address = res;
+    });
   }
+  
   void initState() {
     if (hotel.lat == null || hotel.lot == null) {
       setState(() => {
         address = "Unknown"
       });
       return;
+    } else {
+      getAddress(double.tryParse(hotel.lat!), double.tryParse(hotel.lot!));
     }
-    // coba(double.tryParse(hotel.lat!), double.tryParse(hotel.lot!));
-    // GeocodeLocation.getAddress(double.tryParse(hotel.lat!), double.tryParse(hotel.lot!))
-    // .then((value)  {
-      
-    //   setState(() => {
-        // address = value!
-    //   });
-    // });
-
-    // setState(() {
-    //   address = GeocodeLocation.getAddress(double.tryParse(hotel.lat!), double.tryParse(hotel.lot!));
-    //   print(address);
-    // });
   }
-  // Future<String> address = GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot!));
-  // static Future<String> getAddress(double lat, double lot) {
-  //   GeocodeLocation.getAddress(lat, lot).then((value) => value);
-  // }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
