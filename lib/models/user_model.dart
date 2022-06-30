@@ -56,6 +56,30 @@ class User {
 
 }
 
+Future<User> signup(String full_name, String username, String email, String password, String password_confirmation) async {
+  final response = await http.post(
+    Uri.parse('https://hotelist-be.herokuapp.com/api/register'),
+    headers: <String, String> {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String> {
+      'full_name': full_name,
+      'username': username,
+      'email': email,
+      'password': password,
+      'password_confirmation': password_confirmation
+    })
+  );
+  print("resp ${response.statusCode}");
+  if (response.statusCode == 200) {
+    print("tes" + jsonDecode(response.body));
+    return User.fromJson(jsonDecode(response.body));
+  } else {
+    print(jsonDecode(response.body));
+    throw Exception('Failed to register User');
+  }
+}
+
 Future<User> login(String username, String password) async {
   final response = await http.post(
     Uri.parse('https://hotelist-be.herokuapp.com/api/login'),

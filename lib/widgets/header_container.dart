@@ -12,7 +12,7 @@ class HeaderContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.3,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xFFf7d9cb), Color(0xFFf1c7b2)],
