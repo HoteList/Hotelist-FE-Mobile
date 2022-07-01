@@ -31,17 +31,21 @@ class _ProfilePage extends State<ProfilePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              child: ClipRRect(child: 
-                                Image.network(snapshot.data!.image), 
-                                borderRadius: BorderRadius.circular(70),
-                              ),
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: const BorderRadius.all(Radius.circular(70))
-                              ),
+                            if (snapshot.data!.image != null) (
+                              Container(
+                                child: ClipRRect(child: 
+                                  Image.network(snapshot.data!.image), 
+                                  borderRadius: BorderRadius.circular(70),
+                                ),
+                                width: 70,
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: const BorderRadius.all(Radius.circular(70))
+                                ),
+                              )
+                            ) else (
+                              Text("Halo")
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

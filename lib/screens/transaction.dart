@@ -12,6 +12,7 @@ class TransactionPage extends StatefulWidget {
 
 class _TransactionPage extends State<TransactionPage> {
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
