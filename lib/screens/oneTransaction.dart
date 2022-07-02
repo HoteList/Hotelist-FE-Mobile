@@ -41,7 +41,7 @@ class _OneTransaction extends State<OneTransaction> {
       appBar: AppBar(
         backgroundColor: mBackGroundColor,
         title: SvgPicture.asset('assets/icons/logo.svg', width: MediaQuery.of(context).size.width / 3,),
-        iconTheme: IconThemeData(color: Colors.amber.shade700),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 219, 145, 105)),
         elevation: 0,
         titleSpacing: -10.0,
       ),
@@ -166,7 +166,7 @@ class _OneTransaction extends State<OneTransaction> {
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.amber.shade700,
+                                primary: const Color.fromARGB(255, 219, 145, 105),
                                 onPrimary: Colors.white,
                               ),
                               onPressed: () {

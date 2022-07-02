@@ -33,8 +33,10 @@ class _HotelDetailsState extends State<HotelDetails> {
       address = res;
     });
   }
-  
+
+  @override
   void initState() {
+    super.initState();
     if (hotel.lat == null || hotel.lot == null) {
       setState(() => {
         address = "Unknown"
@@ -52,7 +54,7 @@ class _HotelDetailsState extends State<HotelDetails> {
         backgroundColor: mBackGroundColor,
         title: SvgPicture.asset('assets/icons/logo.svg', width: MediaQuery.of(context).size.width / 3,),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.amber.shade700),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 219, 145, 105)),
         titleSpacing: -10.0,
       ),
       body: ListView(
@@ -105,14 +107,13 @@ class _HotelDetailsState extends State<HotelDetails> {
                       },
                       child: Row(
                         children: <Widget>[
-                          Icon(
+                          const Icon(
                             Icons.location_pin,
-                            color: Colors.amber.shade700,
+                            color: Color.fromARGB(255, 219, 145, 105),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 5),
                             child: Text(
-                              // GeocodeLocation.getAddress(double.tryParse(widget.hotel.lat!), double.tryParse(widget.hotel.lot)),
                               address.toString(),
                               style: const TextStyle(
                                 fontSize: 15,
@@ -124,9 +125,9 @@ class _HotelDetailsState extends State<HotelDetails> {
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.hotel,
-                          color: Colors.amber.shade700,
+                          color: Color.fromARGB(255, 219, 145, 105),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
@@ -150,10 +151,10 @@ class _HotelDetailsState extends State<HotelDetails> {
                       Text(widget.hotel.description!)
                     ),
                     if (widget.hotel.description!.length > 100 && flag) (
-                      TextButton(child: Text(
+                      TextButton(child: const Text(
                         "Show More",
                         style: TextStyle(
-                          color: Colors.amber.shade700
+                          color: Color.fromARGB(255, 219, 145, 105)
                         ),
                       ), onPressed: () {
                         setState(() {
@@ -161,10 +162,10 @@ class _HotelDetailsState extends State<HotelDetails> {
                         });
                       },)
                     ) else if (widget.hotel.description!.length > 100 && !flag) (
-                      TextButton(child: Text(
+                      TextButton(child: const Text(
                         "Show Less",
                         style: TextStyle(
-                          color: Colors.amber.shade700
+                          color: Color.fromARGB(255, 219, 145, 105)
                         ),
                       ), onPressed: () {
                         setState(() {

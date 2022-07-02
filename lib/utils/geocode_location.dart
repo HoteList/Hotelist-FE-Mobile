@@ -6,7 +6,7 @@ class GeocodeLocation {
     if (lat == null || lot == null) return null;
     
     await dotenv.load();
-    final googleGeocoding = await GoogleGeocoding(dotenv.get('GEOCODE_API', fallback: 'API_URL not found'));
+    final googleGeocoding = GoogleGeocoding(dotenv.get('GEOCODE_API', fallback: 'API_URL not found'));
     
     final res = await googleGeocoding.geocoding.getReverse(LatLon(lat, lot));
 

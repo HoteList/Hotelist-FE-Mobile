@@ -62,6 +62,9 @@ class _RegistrationState extends State<Registration> {
                             ),
                             Center(
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: const Color.fromARGB(255, 219, 145, 105)
+                                  ),
                                   child: const Text("Sign Up"),
                                   onPressed: () async {
                                     try {
@@ -88,7 +91,6 @@ class _RegistrationState extends State<Registration> {
                                             builder: (context) => const HomeScreen(),
                                           ));
                                     } catch (e) {
-                                      print(e);
                                       Navigator.pop(context);
                                       setState(() {
                                         error = true;
@@ -154,6 +156,7 @@ Widget _textInput({controller, hint, icon}) {
         if (controller!.isEmpty) {
           return 'Please enter your Username';
         }
+        return null;
       },
     ),
   );

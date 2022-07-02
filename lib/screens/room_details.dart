@@ -29,7 +29,7 @@ class _RoomDetailsState extends State<RoomDetails> {
         backgroundColor: mBackGroundColor,
         title: SvgPicture.asset('assets/icons/logo.svg', width: MediaQuery.of(context).size.width / 3,),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.amber.shade700),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 219, 145, 105)),
         titleSpacing: -10.0,
       ),
       body: Column(
@@ -86,9 +86,9 @@ class _RoomDetailsState extends State<RoomDetails> {
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
-                                        Icon(
+                                        const Icon(
                                           Icons.attach_money,
-                                          color: Colors.amber.shade700,
+                                          color: Color.fromARGB(255, 219, 145, 105),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 5),
@@ -103,9 +103,9 @@ class _RoomDetailsState extends State<RoomDetails> {
                                     ),
                                     Row(
                                       children: <Widget>[
-                                        Icon(
+                                        const Icon(
                                           Icons.hotel,
-                                          color: Colors.amber.shade700,
+                                          color: Color.fromARGB(255, 219, 145, 105),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 5),
@@ -129,10 +129,10 @@ class _RoomDetailsState extends State<RoomDetails> {
                                       Text(widget.roomDetail.description!)
                                     ),
                                     if (widget.roomDetail.description!.length > 100 && flag) (
-                                      TextButton(child: Text(
+                                      TextButton(child: const Text(
                                         "Show More",
                                         style: TextStyle(
-                                          color: Colors.amber.shade700
+                                          color: Color.fromARGB(255, 219, 145, 105)
                                         ),
                                       ), onPressed: () {
                                         setState(() {
@@ -140,10 +140,10 @@ class _RoomDetailsState extends State<RoomDetails> {
                                         });
                                       },)
                                     ) else if (widget.roomDetail.description!.length > 100 && !flag) (
-                                      TextButton(child: Text(
+                                      TextButton(child: const Text(
                                         "Show Less",
                                         style: TextStyle(
-                                          color: Colors.amber.shade700
+                                          color: Color.fromARGB(255, 219, 145, 105)
                                         ),
                                       ), onPressed: () {
                                         setState(() {
@@ -156,7 +156,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_month, color: Colors.amber.shade700,),
+                                  const Icon(Icons.calendar_month, color: Color.fromARGB(255, 219, 145, 105),),
                                   TextButton(
                                     child: Text(
                                       newDate != null ? DateFormat('EEEE, dd-MM-yyyy').format(newDate!) : DateFormat('EEEE, dd-MM-yyyy').format(nowDate),
@@ -179,6 +179,9 @@ class _RoomDetailsState extends State<RoomDetails> {
                               ),
                               Center(
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: const Color.fromARGB(255, 219, 145, 105)
+                                  ),
                                   child: const Text("Book"),
                                   onPressed: snapshot.data != null && snapshot.data!.length >= widget.roomDetail.capacity! ? null : () async {
                                     showDialog(context: context, builder: (BuildContext context) {

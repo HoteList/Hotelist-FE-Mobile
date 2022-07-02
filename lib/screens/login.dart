@@ -69,7 +69,10 @@ class _LoginState extends State<Login> {
                       Expanded(
                         child: Center(
                           child: ElevatedButton(
-                            child: Text("LOGIN"),
+                            style: ElevatedButton.styleFrom(
+                              primary: const Color.fromARGB(255, 219, 145, 105)
+                            ),
+                            child: const Text("LOGIN"),
                             onPressed: () async {
                               try {
                                 final user = await login(username.text, password.text);
@@ -86,14 +89,13 @@ class _LoginState extends State<Login> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
+                                      builder: (context) => const HomeScreen(),
                                     ));
                               } catch (e) {
                                 setState(() {
                                   error = true;
                                 });
                               }
-                            
                           }),
                         ),
                       ),
@@ -119,7 +121,7 @@ class _LoginState extends State<Login> {
                     },
                     child: const Text(
                       "Register",
-                      style: TextStyle(color: Color(0xFFdb9069)),
+                      style: TextStyle(color: Color.fromARGB(255, 219, 145, 105)),
                     ),
                   ),
                 ],
@@ -132,7 +134,6 @@ class _LoginState extends State<Login> {
   }
 }
 
-// ignore: unused_element
 Widget _textInput({controller, hint, icon}) {
   return Container(
     margin: const EdgeInsets.only(top: 10),
@@ -148,12 +149,13 @@ Widget _textInput({controller, hint, icon}) {
         border: InputBorder.none,
         hintText: hint,
         prefixIcon: Icon(icon),
-        prefixIconColor: const Color(0xFFdb9069)
+        prefixIconColor: const Color.fromARGB(255, 219, 145, 105)
       ),
       validator: (controller) {
         if (controller!.isEmpty) {
           return 'Please enter your Username';
         }
+        return null;
       },
     ),
   );
