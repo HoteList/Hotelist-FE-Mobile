@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hotelist_fe_mobile/constants/color_constant.dart';
 import 'package:hotelist_fe_mobile/screens/list_hotel.dart';
 import 'package:hotelist_fe_mobile/screens/profile.dart';
@@ -19,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectId = 0;
   final List<dynamic> _widgetOption = [
     const ListHotel(),
-    const Text("Search"),
     const TransactionPage(),
     const ProfilePage()
   ];
@@ -36,30 +36,24 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(child: 
         _widgetOption.elementAt(_selectId)       
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.orange),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.orange),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.money, color: Colors.orange),
-            label: 'Transaction',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.orange),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectId,
-        selectedItemColor: Colors.amber[800],
-        onTap: (index) {
-          setState(() => _selectId = index);
-        }
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: GNav(
+          // backgroundColor: const Color.fromARGB(255, 219, 145, 105),
+          color: const Color.fromARGB(255, 219, 145, 105),
+          activeColor: const Color.fromARGB(255, 219, 145, 105),
+          tabBackgroundColor: const Color.fromARGB(255, 247, 217, 203),
+          gap: 8,
+          padding: const EdgeInsets.all(10),
+          onTabChange: (index) {
+            setState(() => _selectId = index);
+          },
+          tabs: const [
+            GButton(icon: Icons.home, text: "Home",),
+            GButton(icon: Icons.my_library_books_rounded, text: "Transaction"),
+            GButton(icon: Icons.person, text: "Account",)
+          ],
+        ),
       ),
     );
   }

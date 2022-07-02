@@ -27,7 +27,7 @@ class _TransactionPage extends State<TransactionPage> {
                     return Card(
                       child: InkWell(child:
                         Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child:
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
