@@ -33,10 +33,10 @@ class User {
       email: json['user']['email'],
       full_name: json['user']['full_name'],
       username: json['user']['username'],
-      image: json['user']['image'],
+      image: json['user']['image'] == null ? "" : json['user']['image'],
       lat: json['user']['lat'],
       lot: json['user']['lot'],
-      role: json['user']['role'],
+      role: json['user']['role'] == null ? "" : json['user']['role'],
     );
   }
 
@@ -47,7 +47,7 @@ class User {
       email: json['email'],
       full_name: json['full_name'],
       username: json['username'],
-      image: json['image'],
+      image: json['image'] == null ? "" : json['user']['image'],
       lat: json['lat'],
       lot: json['lot'],
       role: json['role'],
@@ -70,9 +70,7 @@ Future<User> signup(String full_name, String username, String email, String pass
       'password_confirmation': password_confirmation
     })
   );
-  print("resp ${response.statusCode}");
   if (response.statusCode == 200) {
-    print("tes" + jsonDecode(response.body));
     return User.fromJson(jsonDecode(response.body));
   } else {
     print(jsonDecode(response.body));
