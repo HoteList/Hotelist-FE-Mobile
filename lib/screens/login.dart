@@ -22,15 +22,6 @@ class _LoginState extends State<Login> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  bool _secureText = true;
-  late Future<User> futureUser;
-
-  showHide() {
-    setState(() {
-      _secureText = !_secureText;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,14 +47,9 @@ class _LoginState extends State<Login> {
                       _textInput(
                           controller: username, hint: 'Username', icon: Icons.account_circle_sharp),
                       _textInput(controller: password, hint: 'Password', icon: Icons.vpn_key),
-                      // Container(
-                      //   margin: const EdgeInsets.only(top: 10),
-                      //   alignment: Alignment.centerRight,
-                      //   child: const Text('Forgot Password?'),
-                      // ),
                       if (error) (
-                        Container(margin: EdgeInsets.all(19.0), padding: EdgeInsets.all(8.0), color: Color.fromARGB(255, 255, 176, 123), child: 
-                          Text("UNAUTHENTICATED!", style: TextStyle(color: Colors.black))
+                        Container(margin: const EdgeInsets.all(19.0), padding: const EdgeInsets.all(8.0), color: Color.fromARGB(255, 255, 176, 123), child: 
+                          const Text("UNAUTHENTICATED!", style: TextStyle(color: Colors.black))
                         ,)
                       ),
                       Expanded(
@@ -92,7 +78,6 @@ class _LoginState extends State<Login> {
                                       builder: (context) => const HomeScreen(),
                                     ));
                               } catch (e) {
-                                print(e);
                                 setState(() {
                                   error = true;
                                 });

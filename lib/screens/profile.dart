@@ -83,7 +83,8 @@ class _ProfilePage extends State<ProfilePage> {
                                 snapshot.data!.username[0].toUpperCase(),
                                 style: const TextStyle(
                                   fontSize: 30,
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
                                 ),
                               )
                             ),
@@ -93,7 +94,7 @@ class _ProfilePage extends State<ProfilePage> {
                           height: 70,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.brown
+                            color: Color.fromARGB(255, 219, 145, 105)
                           ),
                         )
                       ),

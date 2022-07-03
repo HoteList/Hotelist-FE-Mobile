@@ -56,8 +56,8 @@ class _RegistrationState extends State<Registration> {
                             _textInput(controller: password_confirmation, hint: 'Password Confirmation', icon: Icons.vpn_key),
                     
                             if (error) (
-                              Container(margin: EdgeInsets.all(19.0), padding: EdgeInsets.all(8.0), color: Color.fromARGB(255, 255, 176, 123), child: 
-                                Text("Registration Error!", style: TextStyle(color: Colors.black))
+                              Container(margin: const EdgeInsets.all(19.0), padding: const EdgeInsets.all(8.0), color: Color.fromARGB(255, 255, 176, 123), child: 
+                                const Text("Registration Error!", style: TextStyle(color: Colors.black))
                               ,)
                             ),
                             Center(

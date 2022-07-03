@@ -15,8 +15,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  TextEditingController search = TextEditingController();
-
   int _selectId = 0;
   final List<dynamic> _widgetOption = [
     const ListHotel(),
@@ -34,12 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
         titleSpacing: -40.0,
       ),
       body: Container(child: 
-        _widgetOption.elementAt(_selectId)       
+        _widgetOption.elementAt(_selectId)
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: GNav(
-          // backgroundColor: const Color.fromARGB(255, 219, 145, 105),
           color: const Color.fromARGB(255, 219, 145, 105),
           activeColor: const Color.fromARGB(255, 219, 145, 105),
           tabBackgroundColor: const Color.fromARGB(255, 247, 217, 203),

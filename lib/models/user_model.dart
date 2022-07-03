@@ -70,10 +70,10 @@ Future<User> signup(String full_name, String username, String email, String pass
       'password_confirmation': password_confirmation
     })
   );
+
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   } else {
-    print(jsonDecode(response.body));
     throw Exception('Failed to register User');
   }
 }
@@ -89,7 +89,7 @@ Future<User> login(String username, String password) async {
       'password': password
     })
   );
-  print(jsonDecode(response.body));
+
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   } else {
@@ -130,10 +130,10 @@ Future<User> updateUser(String full_name, String email, String username, String 
       'username': username,
       'email': email,
       'full_name': full_name,
-      'image': image
+      'image': image,
     })
   );
-
+  
   if (response.statusCode == 200) {
     return User.fromJson2(jsonDecode(response.body));
   } else {
