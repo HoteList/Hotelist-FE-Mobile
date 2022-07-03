@@ -59,7 +59,7 @@ Future<List<Transaction>> getTransactionsByUserId() async {
       (jsonDecode(response.body) as List)
       .map((data) => Transaction.fromJson(data)).toList();
 
-    return transactions;
+    return transactions.reversed.toList();
   } else {
     throw Exception('Failed to get Transaction');
   }

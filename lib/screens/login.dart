@@ -92,6 +92,7 @@ class _LoginState extends State<Login> {
                                       builder: (context) => const HomeScreen(),
                                     ));
                               } catch (e) {
+                                print(e);
                                 setState(() {
                                   error = true;
                                 });
