@@ -33,10 +33,10 @@ class User {
       email: json['user']['email'],
       full_name: json['user']['full_name'],
       username: json['user']['username'],
-      image: json['user']['image'] == null ? "" : json['user']['image'],
+      image: json['user']['image'] ?? "",
       lat: json['user']['lat'],
       lot: json['user']['lot'],
-      role: json['user']['role'] == null ? "" : json['user']['role'],
+      role: json['user']['role'] ?? "",
     );
   }
 
@@ -47,7 +47,7 @@ class User {
       email: json['email'],
       full_name: json['full_name'],
       username: json['username'],
-      image: json['image'] == null ? "" : json['user']['image'],
+      image: json['image'] ?? "",
       lat: json['lat'],
       lot: json['lot'],
       role: json['role'],
@@ -89,7 +89,7 @@ Future<User> login(String username, String password) async {
       'password': password
     })
   );
-
+  print(jsonDecode(response.body));
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   } else {
