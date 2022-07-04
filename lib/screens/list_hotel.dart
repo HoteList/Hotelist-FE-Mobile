@@ -117,7 +117,7 @@ class _ListHotelState extends State<ListHotel> {
             ],
           ),
           SizedBox(
-            height: 190,
+            height: 210,
             child: ListView.builder(
               itemCount: nearbyHotels.length > 5 ? 5 : nearbyHotels.length,
               scrollDirection: Axis.horizontal,
